@@ -55,6 +55,10 @@ public class Book {
         return this.author;
     }
 
+    public UUID getBookId(){
+        return this.bookId;
+    }
+
     @Override
     public String toString() {
         return String.format("Book { %s, %s, %s }", bookId, title, author);

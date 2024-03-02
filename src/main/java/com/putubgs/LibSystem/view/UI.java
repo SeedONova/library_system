@@ -21,8 +21,8 @@ public class UI {
         System.out.println("2. Add New User");
         System.out.println("3. Check Out Book");
         System.out.println("4. Return Book");
-        System.out.println("5. List All Books");
-        System.out.println("6. Search Book by Title");
+        System.out.println("5. Search Book by Title");
+        System.out.println("6. Delete book");
         System.out.println("7. Exit");
         System.out.print("Input: ");
         String inputValue = input.nextLine();
@@ -75,6 +75,26 @@ public class UI {
         System.out.println(selectedBook);
         selectedBook.setUser(selectedUser);
         em.persist(selectedBook);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void searchBookPage(){
+        LibCotroller controller = new LibCotroller();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        System.out.println("==============================");
+        System.out.println("Search Book Page");
+        System.out.println("==============================");
+        System.out.print("Enter The Book Title: ");
+        String inputValue = input.nextLine();
+        List<Book> books = controller.getAllBooks(em);
+        for(Book book : books){
+            if(inputValue.equals(book.getTitle())){
+                System.out.println(String.format("Searched Book:%n%s - %s - %s", book.getBookId(), book.getTitle(), book.getAuthor()));
+            }
+        }
         em.getTransaction().commit();
         em.close();
     }

@@ -29,12 +29,9 @@ public class LibCotroller {
                 ui.returnBookPage();
                 break;
             case "5":
-                ui.uiTest();
+                ui.searchBookPage();
                 break;
             case "6":
-                ui.uiTest();
-                break;
-            case "7":
                 ui.uiTest();
                 break;
             default:
