@@ -26,7 +26,7 @@ public class LibCotroller {
                 ui.checkoutPage();
                 break;
             case "4":
-                ui.uiTest();
+                ui.returnBookPage();
                 break;
             case "5":
                 ui.uiTest();
@@ -66,6 +66,11 @@ public class LibCotroller {
 
     public List<Book> getAllBooks(EntityManager em){
         List<Book> books = em.createQuery("SELECT b FROM Book b WHERE b.user IS NULL", Book.class).getResultList();
+        return books;
+    }
+
+    public List<Book> getBorrowedBooks(EntityManager em){
+        List<Book> books = em.createQuery("SELECT b FROM Book b WHERE user IS NOT NULL", Book.class).getResultList();
         return books;
     }
 }

@@ -79,6 +79,36 @@ public class UI {
         em.close();
     }
 
+    public void returnBookPage(){
+        LibCotroller controller = new LibCotroller();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Book selectedBook = new Book();
+        System.out.println("==============================");
+        System.out.println("Add Book Page");
+        System.out.println("==============================");
+        List<Book> books = controller.getBorrowedBooks(em);
+        int index = 1;
+        for(Book book : books){
+            System.out.println(String.format("%d. %s, %s", index, book.getTitle(), book.getAuthor()));
+            index++;
+        }
+        System.out.println("Which book that user wants to borrow?");
+        System.out.print("Select input based on index: ");
+        int inputValue = input.nextInt();
+        index = 1;
+        for(Book book : books){
+            if(index == inputValue){
+                selectedBook = book;
+            }
+        }
+        selectedBook.setUser(null);
+        em.persist(selectedBook);
+        em.getTransaction().commit();
+        em.close();
+    }
+
     public void addBookPage(){
         LibCotroller controller = new LibCotroller();
         System.out.println("==============================");
