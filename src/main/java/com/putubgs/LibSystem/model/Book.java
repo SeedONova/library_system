@@ -6,6 +6,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 import java.util.UUID;
 
@@ -25,16 +27,15 @@ public class Book {
     @Column(name = "checkout_status")
     private Boolean isCheckout = false;
 
-    // public Book(UUID bookId, String title, String author, Boolean isCheckout){
-    //     this.bookId = bookId;
-    //     this.title = title;
-    //     this.author = author;
-    //     this.isCheckout = isCheckout;
-    // }
 
-    // public void setBookId(UUID bookId){
-    //     this.bookId = bookId;
-    // }
+    @ManyToOne
+    @JoinColumn(name =  "userId")
+    private User user;
+
+    public Book(String title, String author){
+        this.title = title;
+        this.author = author;
+    }
 
     public void setTitle(String title){
         this.title = title;

@@ -36,7 +36,7 @@ public class UI {
     }
 
     public void addUserPage(){
-        LibCotroller conCotroller = new LibCotroller();
+        LibCotroller controller = new LibCotroller();
         System.out.println("==============================");
         System.out.println("Add User Page");
         System.out.println("==============================");
@@ -44,6 +44,7 @@ public class UI {
         String firstName = input.nextLine();
         System.out.print("Last Name: ");
         String lastName = input.nextLine();
+        controller.addUser(firstName, lastName);
     }
 
     public void uiTest(){

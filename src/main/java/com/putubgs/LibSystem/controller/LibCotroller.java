@@ -11,8 +11,6 @@ public class LibCotroller {
     UI ui = new UI();
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
     EntityManager em = emf.createEntityManager();
-    User user = new User();
-    Book book = new Book();
 
     public void menuController(String input){
         switch (input) {
@@ -20,7 +18,7 @@ public class LibCotroller {
                 ui.addBookPage();
                 break;
             case "2":
-                ui.uiTest();
+                ui.addUserPage();
                 break;
             case "3":
                 ui.uiTest();
@@ -44,23 +42,17 @@ public class LibCotroller {
     }
 
     public void addBook(String title, String author){
+        Book book = new Book(title, author);
         em.getTransaction().begin();
-        book.setTitle(title);
-        book.setAuthor(author);
-        
         em.persist(book);
-
         em.getTransaction().commit();
         em.close();
     }
 
     public void addUser(String firstName, String lastName){
+        User user = new User(firstName, lastName);
         em.getTransaction().begin();
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-
         em.persist(user);
-
         em.getTransaction().commit();
         em.close();
     }

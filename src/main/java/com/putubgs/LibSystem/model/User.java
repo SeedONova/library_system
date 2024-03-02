@@ -4,10 +4,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
 
 import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -22,10 +27,13 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    // public User(String userId, String name){
-    //     this.userId = userId;
-    //     this.name = name;
-    // }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    List<Book> books = new ArrayList<>();
+
+    public User(String firstName, String lastName){
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public void setUserId(UUID userId){
         this.userId = userId;
