@@ -7,13 +7,14 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import com.putubgs.LibSystem.view.UI;
+
 public class App 
-{
+{  
     public static void main( String[] args )
     {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
-        EntityManager em = emf.createEntityManager();
-        em.close();
+        UI ui = new UI();
+        ui.homePage();
     }
 
 }
