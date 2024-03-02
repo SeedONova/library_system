@@ -3,15 +3,17 @@ package com.putubgs.LibSystem;
 import java.util.UUID;
 
 import com.putubgs.LibSystem.model.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class App 
 {
     public static void main( String[] args )
     {
-        Book book = new Book(UUID.randomUUID().toString(), "Test", "Putu", true);
-        System.out.println(book);
-        User user = new User(UUID.randomUUID().toString(), "Putu");
-        System.out.println(user);
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
+        EntityManager em = emf.createEntityManager();
+        em.close();
     }
 
 }
