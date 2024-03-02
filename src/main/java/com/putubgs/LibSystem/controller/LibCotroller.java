@@ -6,6 +6,7 @@ import com.putubgs.LibSystem.model.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.Query;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class LibCotroller {
                 ui.searchBookPage();
                 break;
             case "6":
-                ui.uiTest();
+                ui.deleteBookPage();
                 break;
             default:
                 ui.uiTest2();
@@ -69,6 +70,24 @@ public class LibCotroller {
     public List<Book> getBorrowedBooks(EntityManager em){
         List<Book> books = em.createQuery("SELECT b FROM Book b WHERE user IS NOT NULL", Book.class).getResultList();
         return books;
+    }
+
+    public Book deleteBook(EntityManager em, String title){
+        Book deletedBook = new Book();
+        List<Book> books = em.createQuery("SELECT b FROM Book b WHERE b.title = :title", Book.class).setParameter("title", title).getResultList();
+        if(books.isEmpty()){
+            return null;
+        }
+        
+        deletedBook = books.get(0);
+        em.getTransaction().begin();
+        em.createQuery("DELETE FROM Book b WHERE b.title = :p").setParameter("p", title).executeUpdate();
+        em.getTransaction().commit();
+        em.close();
+
+
+
+        return deletedBook;
     }
 }
 

@@ -153,6 +153,27 @@ public class UI {
         controller.addUser(firstName, lastName);
     }
 
+    public void deleteBookPage(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
+        EntityManager em = emf.createEntityManager();
+        Book deletedBook = new Book();
+        LibCotroller controller = new LibCotroller();
+        System.out.println("==============================");
+        System.out.println("Add User Page");
+        System.out.println("==============================");
+        List<Book> books = controller.getAllBooks(em);
+        int index = 1;
+        for(Book book : books){
+            System.out.println(String.format("%d. %s, %s", index, book.getTitle(), book.getAuthor()));
+            index++;
+        }
+        System.out.println("Which book that user wants to delete?");
+        System.out.print("Select input based on title: ");
+        String title = input.nextLine();
+        deletedBook = controller.deleteBook(em, title);
+        System.out.println("Deleted Book: " + deletedBook);
+    }
+
     public void uiTest(){
         System.out.println("Correct");
     }
