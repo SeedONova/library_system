@@ -1,8 +1,14 @@
 package com.putubgs.LibSystem.view;
 
 import java.util.Scanner;
+import java.util.List;
 
 import com.putubgs.LibSystem.controller.LibCotroller;
+import com.putubgs.LibSystem.model.*;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 public class UI {
     Scanner input = new Scanner(System.in);
@@ -21,6 +27,56 @@ public class UI {
         System.out.print("Input: ");
         String inputValue = input.nextLine();
         controller.menuController(inputValue);
+    }
+
+    public void checkoutPage(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        User selectedUser = new User();
+        Book selectedBook = new Book();
+        LibCotroller controller = new LibCotroller();
+        System.out.println("==============================");
+        System.out.println("Checkout Page");
+        System.out.println("==============================");
+
+        List<User> users = controller.getAllUsers(em);
+        int index = 1;
+        for(User user : users){
+            System.out.println(String.format("%d. %s %s", index, user.getFirstName(), user.getLastName()));
+            index++;
+        }
+        System.out.println("Which user who wants to borrow a book?");
+        System.out.print("Select user by index: ");
+        int inputValue = input.nextInt();
+        index = 1;
+        for(User user : users){
+            if(index == inputValue){
+                selectedUser = user;
+            }
+        }
+        System.out.println(selectedUser);
+
+        List<Book> books = controller.getAllBooks(em);
+        index = 1;
+        for(Book book : books){
+            System.out.println(String.format("%d. %s, %s", index, book.getTitle(), book.getAuthor()));
+            index++;
+        }
+        System.out.println("Which book that user wants to borrow?");
+        System.out.print("Select input based on index: ");
+        inputValue = input.nextInt();
+        index = 1;
+        for(Book book : books){
+            if(index == inputValue){
+                selectedBook = book;
+            }
+        }
+        System.out.println(selectedBook);
+        selectedBook.setUser(selectedUser);
+        em.persist(selectedBook);
+        em.getTransaction().commit();
+        em.close();
     }
 
     public void addBookPage(){

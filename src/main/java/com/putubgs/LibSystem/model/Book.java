@@ -24,18 +24,16 @@ public class Book {
     @Column(name = "book_author", nullable = false)
     private String author;
 
-    @Column(name = "checkout_status")
-    private Boolean isCheckout = false;
-
-
     @ManyToOne
-    @JoinColumn(name =  "userId")
+    @JoinColumn(name = "userId")
     private User user;
 
     public Book(String title, String author){
         this.title = title;
         this.author = author;
     }
+
+    public Book(){}
 
     public void setTitle(String title){
         this.title = title;
@@ -45,12 +43,20 @@ public class Book {
         this.author = author;
     }
 
-    public void setIsCheckout(Boolean isCheckout){
-        this.isCheckout = isCheckout;
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public String getTitle(){
+        return this.title;
+    }
+
+    public String getAuthor(){
+        return this.author;
     }
 
     @Override
     public String toString() {
-        return String.format("Book { %s, %s, %s, %b}", bookId, title, author, isCheckout);
+        return String.format("Book { %s, %s, %s }", bookId, title, author);
     }
 }

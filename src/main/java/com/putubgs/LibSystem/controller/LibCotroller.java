@@ -7,6 +7,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.util.List;
+
 public class LibCotroller {
     UI ui = new UI();
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_system");
@@ -21,7 +23,7 @@ public class LibCotroller {
                 ui.addUserPage();
                 break;
             case "3":
-                ui.uiTest();
+                ui.checkoutPage();
                 break;
             case "4":
                 ui.uiTest();
@@ -57,6 +59,15 @@ public class LibCotroller {
         em.close();
     }
 
+    public List<User> getAllUsers(EntityManager em){
+        List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        return users;
+    }
+
+    public List<Book> getAllBooks(EntityManager em){
+        List<Book> books = em.createQuery("SELECT b FROM Book b WHERE b.user IS NULL", Book.class).getResultList();
+        return books;
+    }
 }
 
 

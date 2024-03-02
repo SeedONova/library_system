@@ -35,6 +35,8 @@ public class User {
         this.lastName = lastName;
     }
 
+    public User(){}
+
     public void setUserId(UUID userId){
         this.userId = userId;
     }
@@ -47,4 +49,16 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getFirstName(){
+        return this.firstName;
+    }
+
+    public String getLastName(){
+        return this.lastName;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s - %s", this.userId, this.firstName, this.lastName);
+    }
 }
